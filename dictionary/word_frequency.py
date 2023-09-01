@@ -9,3 +9,7 @@ class WordFrequency:
     def __init__(self, word: str, frequency: int):
         self.word = word
         self.frequency = frequency
+        
+    # Method to compare two WordFrequency objects based on their words
+    def __lt__(self, other):
+        return self.word < other.word

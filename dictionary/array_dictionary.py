@@ -1,5 +1,6 @@
-from word_frequency import WordFrequency
-from base_dictionary import BaseDictionary
+#dictionary. --- remember to change this
+from .word_frequency import WordFrequency
+from .base_dictionary import BaseDictionary
 import bisect
 
 
@@ -13,55 +14,55 @@ import bisect
 
 class ArrayDictionary(BaseDictionary):
 
+    # Constructor initializes an empty list of word frequencies.
     def __init__(self):
-        # TO BE IMPLEMENTED
-        pass
+        self.words_frequencies = []
 
-
+    # Builds the dictionary from a list of WordFrequency objects.
     def build_dictionary(self, words_frequencies: [WordFrequency]):
-        """
-        construct the data structure to store nodes
-        @param words_frequencies: list of (word, frequency) to be stored
-        """
-        # TO BE IMPLEMENTED
+        self.words_frequencies = words_frequencies
+        # Sort the list of WordFrequency objects by word.
+        self.words_frequencies.sort(key=lambda x: x.word)
 
-
+    # Searches for a word in the dictionary and returns its frequency.
+    # Returns 0 if the word is not found.
     def search(self, word: str) -> int:
-        """
-        search for a word
-        @param word: the word to be searched
-        @return: frequency > 0 if found and 0 if NOT found
-        """
-        # TO BE IMPLEMENTED
+        # Find the index of the word in the list.
+        idx = bisect.bisect_left(self.words_frequencies, WordFrequency(word, 0))
+        # Check if the word is in the list.
+        if idx != len(self.words_frequencies) and self.words_frequencies[idx].word == word:
+            return self.words_frequencies[idx].frequency
+        else:
+            return 0
 
-        return 0
-
+    # Adds a WordFrequency object to the dictionary.
+    # Returns False if the word is already in the dictionary, True otherwise.
     def add_word_frequency(self, word_frequency: WordFrequency) -> bool:
-        """
-        add a word and its frequency to the dictionary
-        @param word_frequency: (word, frequency) to be added
-        :return: True whether succeeded, False when word is already in the dictionary
-        """
-        # TO BE IMPLEMENTED
+        idx = bisect.bisect_left(self.words_frequencies, word_frequency)
+        if idx != len(self.words_frequencies) and self.words_frequencies[idx].word == word_frequency.word:
+            return False
+        else:
+            bisect.insort(self.words_frequencies, word_frequency)
+            return True
 
-        return False
-
+    # Deletes a word from the dictionary.
+    # Returns True if the word was deleted, False otherwise.
     def delete_word(self, word: str) -> bool:
-        """
-        delete a word from the dictionary
-        @param word: word to be deleted
-        @return: whether succeeded, e.g. return False when point not found
-        """
-        # find the position of 'word' in the list, if exists, will be at idx-1
-        # TO BE IMPLEMENTED
+        idx = bisect.bisect_left(self.words_frequencies, WordFrequency(word, 0))
+        if idx != len(self.words_frequencies) and self.words_frequencies[idx].word == word:
+            del self.words_frequencies[idx]
+            return True
+        else:
+            return False
 
-        return False
-
-
+    # Returns a list of up to 3 most frequent words in the dictionary that start with a prefix.
     def autocomplete(self, prefix_word: str) -> [WordFrequency]:
-        """
-        return a list of 3 most-frequent words in the dictionary that have 'prefix_word' as a prefix
-        @param prefix_word: word to be autocompleted
-        @return: a list (could be empty) of (at most) 3 most-frequent words with prefix 'prefix_word'
-        """
-        return []
+        idx = bisect.bisect_left(self.words_frequencies, WordFrequency(prefix_word, 0))
+        results = []
+        # Find all words that start with the prefix.
+        while idx < len(self.words_frequencies) and self.words_frequencies[idx].word.startswith(prefix_word):
+            results.append(self.words_frequencies[idx])
+            idx += 1
+        # Sort the results by frequency in descending order and return the top 3.
+        results.sort(key=lambda x: -x.frequency)
+        return results[:3]
