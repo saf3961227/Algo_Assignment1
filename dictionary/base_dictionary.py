@@ -10,30 +10,40 @@ from word_frequency import WordFrequency
 
 class BaseDictionary:
     def build_dictionary(self, words_frequencies: [WordFrequency]):
-        for word_frequency in words_frequencies:
-            self.add_word_frequency(word_frequency)
+        """
+        construct the data structure to store nodes
+        @param words_frequencies: list of (word, frequency) to be stored
+        """
+        pass
 
     def search(self, word: str) -> int:
-        if word in self._words_frequencies:
-            return self._words_frequencies[word].frequency
-        return 0
+        """
+        search for a word
+        @param word: the word to be searched
+        @return: frequency > 0 if found and 0 if NOT found
+        """
+        pass
 
     def add_word_frequency(self, word_frequency: WordFrequency) -> bool:
-        if word_frequency.word in self._words_frequencies:
-            return False
-        self._words_frequencies[word_frequency.word] = word_frequency
-        return True
+        """
+        add a word and its frequency to the dictionary
+        @param word_frequency: (word, frequency) to be added
+        @return: True whether succeeded, False when word is already in the dictionary
+        """
+        pass
 
     def delete_word(self, word: str) -> bool:
-        if word not in self._words_frequencies:
-            return False
-        del self._words_frequencies[word]
-        return True
+        """
+        delete a word from the dictionary
+        @param word: word to be deleted
+        @return: whether succeeded, e.g. return False when point not found
+        """
+        pass
 
     def autocomplete(self, prefix_word: str) -> [WordFrequency]:
-        words = []
-        for word, word_frequency in self._words_frequencies.items():
-            if word.startswith(prefix_word):
-                words.append(word_frequency)
-        words.sort(key=lambda word_frequency: word_frequency.frequency, reverse=True)
-        return words[:3]
+        """
+        return a list of 3 most-frequent words in the dictionary that have 'prefix_word' as a prefix
+        @param prefix_word: word to be autocompleted
+        @return: a list (could be empty) of (at most) 3 most-frequent words with prefix 'prefix_word'
+        """
+        pass
