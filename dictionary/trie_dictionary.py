@@ -23,53 +23,79 @@ class TrieNode:
 class TrieDictionary(BaseDictionary):
 
     def __init__(self):
-        # TO BE IMPLEMENTED
-        pass
+        self.root = TrieNode()
 
     def build_dictionary(self, words_frequencies: [WordFrequency]):
-        """
-        construct the data structure to store nodes
-        @param words_frequencies: list of (word, frequency) to be stored
-        """
-        # TO BE IMPLEMENTED
+        for word, frequency in words_frequencies:
+            self.add_word_frequency(WordFrequency(word, frequency))
 
 
     def search(self, word: str) -> int:
-        """
-        search for a word
-        @param word: the word to be searched
-        @return: frequency > 0 if found and 0 if NOT found
-        """
-        # TO BE IMPLEMENTED
-
+        node = self.root
+        for letter in word:
+            if letter in node.children:
+                node = node.children[letter]
+            else:
+                return 0
+        if node.is_last:
+            return node.frequency
         return 0
 
 
     def add_word_frequency(self, word_frequency: WordFrequency) -> bool:
-        """
-        add a word and its frequency to the dictionary
-        @param word_frequency: (word, frequency) to be added
-        :return: True whether succeeded, False when word is already in the dictionary
-        """
 
-        # TO BE IMPLEMENTED
-
-        return False
+        node = self.root
+        for letter in word_frequency.word:
+            if letter not in node.children:
+                node.children[letter] = TrieNode(letter)
+            node = node.children[letter]
+        if node.is_last:
+            return False
+        node.is_last = True
+        node.frequency = word_frequency.frequency
+        return True
+        
 
     def delete_word(self, word: str) -> bool:
-        """
-        delete a word from the dictionary
-        @param word: word to be deleted
-        @return: whether succeeded, e.g. return False when point not found
-        """
-
+        node = self.root
+        
+        for letter in word:
+            if letter in node.children:
+                node = node.children[letter]
+            else:
+                return False
+            
+        if node.is_last:
+            node.is_last = False
+            node.frequency = None
+            return True
+        
         return False
 
 
     def autocomplete(self, word: str) -> [WordFrequency]:
-        """
-        return a list of 3 most-frequent words in the dictionary that have 'word' as a prefix
-        @param word: word to be autocompleted
-        @return: a list (could be empty) of (at most) 3 most-frequent words with prefix 'word'
-        """
-        return []
+        completions = []
+
+    # Find the node corresponding to the prefix
+        node = self.root
+        for letter in word:
+            if letter in node.children:
+                node = node.children[letter]
+            else:
+                return completions
+
+    # Helper function to perform Trie traversal and find completions
+        def find_completions(node, prefix):
+            if node.is_last:
+                completions.append(WordFrequency(prefix, node.frequency))
+            for letter, child in node.children.items():
+                find_completions(child, prefix + letter)
+
+        if node.is_last:
+            completions.append(WordFrequency(word, node.frequency))
+
+        find_completions(node, word)
+    
+    # Sort completions by frequency in descending order and return the top 3
+        completions.sort(key=lambda x: x.frequency, reverse=True)
+        return completions[:3]
