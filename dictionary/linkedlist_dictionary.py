@@ -1,5 +1,5 @@
-from dictionary.base_dictionary import BaseDictionary
-from dictionary.word_frequency import WordFrequency
+from .base_dictionary import BaseDictionary
+from .word_frequency import WordFrequency
 
 
 class ListNode:
@@ -22,58 +22,58 @@ class ListNode:
 class LinkedListDictionary(BaseDictionary):
 
     def __init__(self):
-        # TO BE IMPLEMENTED
-        pass
-
+        self.head = None  # Initialize the head of the linked list to None
 
     def build_dictionary(self, words_frequencies: [WordFrequency]):
-        """
-        construct the data structure to store nodes
-        @param words_frequencies: list of (word, frequency) to be stored
-        """
-        # TO BE IMPLEMENTED
-
+        for wf in words_frequencies:
+            self.add_word_frequency(wf)  # Add each WordFrequency object to the linked list
 
     def search(self, word: str) -> int:
-        """
-        search for a word
-        @param word: the word to be searched
-        @return: frequency > 0 if found and 0 if NOT found
-        """
-
-        # TO BE IMPLEMENTED
-        return 0
+        current = self.head
+        while current:
+            if current.word_frequency.word == word:
+                return current.word_frequency.frequency  # Return the frequency of the word if found
+            current = current.next
+        return 0  # Return 0 if the word is not found
 
     def add_word_frequency(self, word_frequency: WordFrequency) -> bool:
-        """
-        add a word and its frequency to the dictionary
-        @param word_frequency: (word, frequency) to be added
-        :return: True whether succeeded, False when word is already in the dictionary
-        """
-
-        # TO BE IMPLEMENTED
-        return False
+        new_node = ListNode(word_frequency)
+        if not self.head:
+            self.head = new_node  # Set the head to the new node if the linked list is empty
+            return True
+        if self.head.word_frequency.word == word_frequency.word:
+            return False  # Return False if the word is already present in the linked list
+        current = self.head
+        while current.next:
+            if current.next.word_frequency.word == word_frequency.word:
+                return False  # Return False if the word is already present in the linked list
+            current = current.next
+        current.next = new_node  # Add the new node to the end of the linked list
+        return True
 
     def delete_word(self, word: str) -> bool:
-        """
-        delete a word from the dictionary
-        @param word: word to be deleted
-        @return: whether succeeded, e.g. return False when point not found
-        """
+        if not self.head:
+            return False  # Return False if the linked list is empty
+        if self.head.word_frequency.word == word:
+            self.head = self.head.next  # Remove the head of the linked list if it contains the word
+            return True
+        current = self.head
+        while current.next:
+            if current.next.word_frequency.word == word:
+                current.next = current.next.next  # Remove the node containing the word
+                return True
+            current = current.next
+        return False  # Return False if the word is not found in the linked list
 
-        # TO BE IMPLEMENTED
-        return False
-
-
-    def autocomplete(self, word: str) -> [WordFrequency]:
-        """
-        return a list of 3 most-frequent words in the dictionary that have 'word' as a prefix
-        @param word: word to be autocompleted
-        @return: a list (could be empty) of (at most) 3 most-frequent words with prefix 'word'
-        """
-
-        # TO BE IMPLEMENTED
-        return []
+    def autocomplete(self, prefix_word: str) -> [WordFrequency]:
+        current = self.head
+        results = []
+        while current:
+            if current.word_frequency.word.startswith(prefix_word):
+                results.append(current.word_frequency)  # Add the WordFrequency object to the results if the word starts with the prefix
+            current = current.next
+        results.sort(key=lambda x: -x.frequency)  # Sort the results in descending order of frequency
+        return results[:3]  # Return the top 3 results
 
 
 
