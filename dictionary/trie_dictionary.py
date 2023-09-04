@@ -1,5 +1,6 @@
-from dictionary.base_dictionary import BaseDictionary
-from dictionary.word_frequency import WordFrequency
+#add dictionary back
+from .base_dictionary import BaseDictionary
+from .word_frequency import WordFrequency
 
 # ------------------------------------------------------------------------
 # This class is required TO BE IMPLEMENTED
@@ -26,8 +27,8 @@ class TrieDictionary(BaseDictionary):
         self.root = TrieNode()
 
     def build_dictionary(self, words_frequencies: [WordFrequency]):
-        for word, frequency in words_frequencies:
-            self.add_word_frequency(WordFrequency(word, frequency))
+        for wf in words_frequencies:
+            self.add_word_frequency(WordFrequency(wf.word, wf.frequency))
 
 
     def search(self, word: str) -> int:
