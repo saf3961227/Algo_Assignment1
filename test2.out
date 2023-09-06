@@ -1,0 +1,22 @@
+NOT Found 'abandon'
+Add 'abandon' succeeded
+NOT Found 'abandoning'
+Autocomplete for 'ab': [ aboriginal: 7042822  abbas: 1437558  abetting: 233760  ]
+Add 'abandoning' succeeded
+Found 'abandoning' with frequency 1000000
+Autocomplete for 'ab': [ aboriginal: 7042822  abbas: 1437558  abandoning: 1000000  ]
+Delete 'abroad' failed
+NOT Found 'abroad'
+Autocomplete for 'ab': [ aboriginal: 7042822  abbas: 1437558  abandoning: 1000000  ]
+Add 'abroad' succeeded
+Autocomplete for 'ab': [ aboriginal: 7042822  abbas: 1437558  abandoning: 1000000  ]
+Autocomplete for 'distill': [ ]
+NOT Found 'distilling'
+Add 'distilling' succeeded
+Autocomplete for 'distilling': [ distilling: 1000  ]
+Delete 'distilling' succeeded
+Delete 'distilling' failed
+Autocomplete for 'distill': [ ]
+Add 'distribution' succeeded
+Delete 'distraction' failed
+Autocomplete for 'dist': [ distribution: 100000  ]

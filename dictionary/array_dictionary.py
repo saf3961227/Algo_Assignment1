@@ -2,6 +2,8 @@
 from .word_frequency import WordFrequency
 from .base_dictionary import BaseDictionary
 import bisect
+import time
+import csv
 
 
 # ------------------------------------------------------------------------
@@ -17,6 +19,7 @@ class ArrayDictionary(BaseDictionary):
     # Constructor initializes an empty list of word frequencies.
     def __init__(self):
         self.words_frequencies = []
+        self.operation_data = []
 
     # Builds the dictionary from a list of WordFrequency objects.
     def build_dictionary(self, words_frequencies: [WordFrequency]):
@@ -27,13 +30,24 @@ class ArrayDictionary(BaseDictionary):
     # Searches for a word in the dictionary and returns its frequency.
     # Returns 0 if the word is not found.
     def search(self, word: str) -> int:
+        start_time = time.time()
+        
         # Find the index of the word in the list.
         idx = bisect.bisect_left(self.words_frequencies, WordFrequency(word, 0))
+        
         # Check if the word is in the list.
         if idx != len(self.words_frequencies) and self.words_frequencies[idx].word == word:
-            return self.words_frequencies[idx].frequency
+            frequency = self.words_frequencies[idx].frequency
         else:
-            return 0
+            frequency = 0
+        
+        end_time = time.time()
+        operation_time = end_time - start_time
+        
+        self.operation_data.append(["Search", word, frequency, operation_time])
+        
+        return frequency
+
 
     # Adds a WordFrequency object to the dictionary.
     # Returns False if the word is already in the dictionary, True otherwise.
@@ -66,3 +80,9 @@ class ArrayDictionary(BaseDictionary):
         # Sort the results by frequency in descending order and return the top 3.
         results.sort(key=lambda x: -x.frequency)
         return results[:3]
+    
+    def write_operation_data_to_csv(self, filename='data_collection.csv'):
+        with open(filename, 'w', newline='') as csvfile:
+            data_writer = csv.writer(csvfile)
+            data_writer.writerow(["Operation", "Word", "Frequency", "Time Taken"])
+            data_writer.writerows(self.operation_data)
