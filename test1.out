@@ -1,0 +1,14 @@
+Found 'facial' with frequency 12721452
+Delete 'facial' succeeded
+NOT Found 'facial'
+Found 'booming' with frequency 1170560
+Add 'booming' failed
+Found 'booming' with frequency 1170560
+Autocomplete for 'boo': [ book: 330959949  booking: 23522206  boobs: 21461250  ]
+Delete 'boom' failed
+Autocomplete for 'boo': [ book: 330959949  booking: 23522206  boobs: 21461250  ]
+NOT Found 'aluminum'
+Autocomplete for 'alum': [ alumni: 20070485  aluminium: 5178887  alumina: 829273  ]
+Delete 'alumna' failed
+Autocomplete for 'alum': [ alumni: 20070485  aluminium: 5178887  alumina: 829273  ]
+Autocomplete for 'alrighty': [ alrighty: 85654  ]

@@ -1,0 +1,23 @@
+Operation,Word,Frequency,Time Taken
+Search,abandon,0,7.099999999995998e-06
+Add,abandon,1000,4.599999999993498e-06
+Search,abandoning,0,2.300000000010627e-06
+Autocomplete,ab,N/A,7.400000000004625e-06
+Add,abandoning,1000000,3.600000000006376e-06
+Search,abandoning,1000000,2.3999999999996247e-06
+Autocomplete,ab,N/A,5.800000000000249e-06
+Delete,abroad,N/A,2.000000000002e-06
+Search,abroad,0,1.8000000000101268e-06
+Autocomplete,ab,N/A,4.600000000007376e-06
+Add,abroad,331441,3.0000000000030003e-06
+Autocomplete,ab,N/A,5.099999999993998e-06
+Autocomplete,distill,N/A,2.6999999999943736e-06
+Search,distilling,0,1.8999999999991246e-06
+Add,distilling,1000,2.9999999999891225e-06
+Autocomplete,distilling,N/A,3.2000000000087514e-06
+Delete,distilling,N/A,2.5000000000025002e-06
+Delete,distilling,N/A,1.8000000000101268e-06
+Autocomplete,distill,N/A,2.299999999996749e-06
+Add,distribution,100000,2.9000000000001247e-06
+Delete,distraction,N/A,1.8999999999991246e-06
+Autocomplete,dist,N/A,2.9000000000001247e-06
