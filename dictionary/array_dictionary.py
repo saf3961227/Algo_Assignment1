@@ -1,6 +1,5 @@
-#dictionary. --- remember to change this
-from .word_frequency import WordFrequency
-from .base_dictionary import BaseDictionary
+from dictionary.word_frequency import WordFrequency
+from dictionary.base_dictionary import BaseDictionary
 import bisect
 import time
 import csv
