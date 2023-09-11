@@ -1,7 +1,8 @@
 #add dictionary back
 from .base_dictionary import BaseDictionary
 from .word_frequency import WordFrequency
-
+import time
+import csv
 # ------------------------------------------------------------------------
 # This class is required TO BE IMPLEMENTED
 # Trie-based dictionary implementation
@@ -30,7 +31,6 @@ class TrieDictionary(BaseDictionary):
         for wf in words_frequencies:
             self.add_word_frequency(WordFrequency(wf.word, wf.frequency))
 
-
     def search(self, word: str) -> int:
         node = self.root
         for letter in word:
@@ -42,9 +42,7 @@ class TrieDictionary(BaseDictionary):
             return node.frequency
         return 0
 
-
     def add_word_frequency(self, word_frequency: WordFrequency) -> bool:
-
         node = self.root
         for letter in word_frequency.word:
             if letter not in node.children:
@@ -55,29 +53,25 @@ class TrieDictionary(BaseDictionary):
         node.is_last = True
         node.frequency = word_frequency.frequency
         return True
-        
 
     def delete_word(self, word: str) -> bool:
         node = self.root
-        
         for letter in word:
             if letter in node.children:
                 node = node.children[letter]
             else:
+                end_time = time.perf_counter()
                 return False
-            
         if node.is_last:
             node.is_last = False
             node.frequency = None
             return True
-        
         return False
-
 
     def autocomplete(self, word: str) -> [WordFrequency]:
         completions = []
 
-    # Find the node corresponding to the prefix
+        # Find the node corresponding to the prefix
         node = self.root
         for letter in word:
             if letter in node.children:
@@ -85,18 +79,15 @@ class TrieDictionary(BaseDictionary):
             else:
                 return completions
 
-    # Helper function to perform Trie traversal and find completions
+        # Helper function to perform Trie traversal and find completions
         def find_completions(node, prefix):
             if node.is_last:
                 completions.append(WordFrequency(prefix, node.frequency))
             for letter, child in node.children.items():
                 find_completions(child, prefix + letter)
 
-        if node.is_last:
-            completions.append(WordFrequency(word, node.frequency))
-
         find_completions(node, word)
-    
-    # Sort completions by frequency in descending order and return the top 3
+
+        # Sort completions by frequency in descending order and return the top 3
         completions.sort(key=lambda x: x.frequency, reverse=True)
         return completions[:3]

@@ -117,8 +117,6 @@ if __name__ == '__main__':
 
         output_file.close()
         command_file.close()
-        #delete before submit
-        agent.write_operation_data_to_csv('C:\\Tahzeeb\\UNI\\RMIT australia\\algorithms\\Assignment1\\Algo_Assignment1\\data_collection_linkedlist_100000.csv')
     except FileNotFoundError as e:
         print("Command file doesn't exist.")
         usage()
